@@ -51,5 +51,73 @@ Meteor.methods({
         isChecked
       }
     });
-  }
+  },
+
+  'tasks.want'(taskId, want) {
+    // for now null
+/*     check(taskId, String);
+    check(isChecked, Boolean);
+ 
+    if (!this.userId) {
+      throw new Meteor.Error('Not authorized.');
+    }
+
+    const task = TasksCollection.findOne({ _id: taskId, userId: this.userId });
+
+    if (!task) {
+      throw new Meteor.Error('Access denied.');
+    }
+ 
+    TasksCollection.update(taskId, {
+      $set: {
+        isChecked
+      }
+    }); */
+  },
+
+  'tasks.can'(taskId, can) {
+    // for now null
+/*     check(taskId, String);
+    check(isChecked, Boolean);
+ 
+    if (!this.userId) {
+      throw new Meteor.Error('Not authorized.');
+    }
+
+    const task = TasksCollection.findOne({ _id: taskId, userId: this.userId });
+
+    if (!task) {
+      throw new Meteor.Error('Access denied.');
+    }
+ 
+    TasksCollection.update(taskId, {
+      $set: {
+        isChecked
+      }
+    }); */
+
+  },
+
+  'tasks.should'(taskId, should) {
+    // for now null
+/*     check(taskId, String);
+    check(isChecked, Boolean);
+ 
+    if (!this.userId) {
+      throw new Meteor.Error('Not authorized.');
+    }
+
+    const task = TasksCollection.findOne({ _id: taskId, userId: this.userId });
+
+    if (!task) {
+      throw new Meteor.Error('Access denied.');
+    }
+ 
+    TasksCollection.update(taskId, {
+      $set: {
+        isChecked
+      }
+    }); */
+  },
+
 });
