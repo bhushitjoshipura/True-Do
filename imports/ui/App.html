@@ -1,0 +1,57 @@
+<body>
+    {{> mainContainer }}
+</body>
+
+<template name="form">
+    <form class="task-form">
+        <input type="text" name="text" placeholder="Type to add new tasks" />
+        <button type="submit">+</button>
+    </form>
+</template>
+
+<template name="mainContainer">
+    <div class="app">
+        <header>
+            <div class="app-bar">
+                <div class="app-header">
+                    <h1>📝️ True-Do List {{incompleteCount}} </h1>
+                </div>
+            </div>
+        </header>
+        {{#if isUserLogged}}
+            <!--for logout-->
+            <div class="user">{{getUser.username}}</div>
+            <div class="main">
+                <!--for new task-->
+                {{> form }}
+                <div class="filter">
+                    <!--for showing only completed or all tasks-->
+                    <button id="hide-completed-button">
+                        {{#if hideCompleted}}
+                                Show All
+                        {{else}}
+                                Hide Completed
+                        {{/if}}
+                    </button>
+                </div>
+
+                <!--for showing "loading..." when tasks aren't ready. Defined as a helper in App.js/mainContainer/helper/isLoading-->
+                {{#if isLoading}}
+                    <div class="loading">loading...</div>
+                {{/if}}
+
+                <!--for showing task list-->
+                <ul class="tasks">
+                    {{#each tasks}}
+                        {{> task}}
+                    {{/each}}
+                </ul>
+            </div>
+        {{else}}
+            <!--for showing login-->
+            {{> login}}
+        {{/if}}
+    </div>
+</template>
+
+
