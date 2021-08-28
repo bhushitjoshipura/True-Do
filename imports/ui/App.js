@@ -6,7 +6,6 @@ import './App.html';
 import './Login.js';
 import './Task.js';
 
-
 const SEED_USERNAME = 'meteorite';
 const SEED_PASSWORD = 'password';
 const getUser = () => Meteor.user();
@@ -15,19 +14,25 @@ const isUserLogged = () => !!getUser();
 const HIDE_COMPLETED_STRING = "hideCompleted";
 const IS_LOADING_STRING = "isLoading";
 
+// this returns Mongo query strings to be used by mainContainer/tasks for list display
 const getTasksFilter = () => {
+  // user related filter - don't want to show other users' tasks
   const user = getUser();
-
-  const hideCompletedFilter = { isChecked: { $ne: true } };
-
   const userFilter = user ? { userId: user._id } : {};
 
-  const pendingOnlyFilter = { ...hideCompletedFilter, ...userFilter };
+  // ... and depending on whethe we need to show completed tasks, another filter kicks in
+  const hideCompletedFilter = { isChecked: { $ne: true } };
 
+  // return two filters - this seems JS syntax quirk of returning two items 
+  const pendingOnlyFilter = { ...hideCompletedFilter, ...userFilter };
   return { userFilter, pendingOnlyFilter };
 }
 
+// When main container is created
+// 1. declare necessary Reactive elements
+// 2. make sure it autoruns when handler is ready
 Template.mainContainer.onCreated(function mainContainerOnCreated() {
+    // mainContainer is definitely reactive trigger
     this.state = new ReactiveDict();
 
     // Tracker.autorun run a function now and rerun it later whenever its dependencies change
@@ -39,79 +44,87 @@ Template.mainContainer.onCreated(function mainContainerOnCreated() {
   });
 
 Template.mainContainer.helpers({
-/*   tasks1() {
-    return TasksCollection.find({}, { sort: { createdAt: -1 } });
-  }, */
+  // returns a boolean whether the page is loading
+  isLoading() {
+    const instance = Template.instance();
+    return instance.state.get(IS_LOADING_STRING);
+  },
+  
+  //------------------- User Related -------------------
+
+  // determine if the user is logged at all
   isUserLogged() {
     return isUserLogged();
   },
-/*   tasks() {
-    const instance = Template.instance();
-    
-    const hideCompleted = instance.state.get(HIDE_COMPLETED_STRING);
-    const hideCompletedFilter = { isChecked: { $ne: true } };
 
-    return TasksCollection.find(hideCompleted ? hideCompletedFilter : {}, {
-      sort: { createdAt: -1 },
-    }).fetch();
-  }, */
+  // get user name, if logged in
+  // useful part of getUser() is username, which is used in the template
+  // defined here because global getUser() can't be used as a part of the template?
+  getUser() {
+    return getUser();
+  },
+
+  //------------------- Task List Related -------------------
+  // whether the state of the main container is hiding completed string or not
+  // Necessary because html refers to main container's "#if hideCompleted" to change the state of button
+  hideCompleted() {
+    //console.log(e.stack);
+    return Template.instance().state.get(HIDE_COMPLETED_STRING);
+  }, 
+
+  // Must return a list of tasks meeting filters and sorting criteria
+  // used as main container's "#each task"
   tasks() {
-    const instance = Template.instance();
-    const hideCompleted = instance.state.get(HIDE_COMPLETED_STRING);
-
-    const { pendingOnlyFilter, userFilter } = getTasksFilter();
-
+    // no login, no tasks displayed
     if (!isUserLogged()) {
       return [];
     }
 
+    // otherwise on this main container
+    const instance = Template.instance();
+    // determine whether completed tasks are to be displayed
+    const hideCompleted = instance.state.get(HIDE_COMPLETED_STRING);
+    // and get which user we are talking about
+    const { pendingOnlyFilter, userFilter } = getTasksFilter();
+    // and depending on the UI state of hideCompleted, return the list of tasks
     return TasksCollection.find(hideCompleted ? pendingOnlyFilter : userFilter, {
       sort: { createdAt: -1 },
     }).fetch();
   },
 
-
-  hideCompleted() {
-    return Template.instance().state.get(HIDE_COMPLETED_STRING);
-  }, 
-/*   incompleteCount() {
-    const incompleteTasksCount = TasksCollection.find({ isChecked: { $ne: true } }).count();
-
-    // TODO - how do I move the following string into HTML? It doesn't belong here in JS
-    return incompleteTasksCount ? `(${incompleteTasksCount})` : "All Done!";
-  }, */ 
+  // to be displayed in the header
   incompleteCount() {
+    // Show nothing if the user isn't even logged in
     if (!isUserLogged()) {
       return '';
     }
 
+    // else
+    // get states of userFilter and hideCompletedFilter
+    // count number of tasks that match the filter
+    // return the count to be displayed as "{{incompleteCount}}"
     const { pendingOnlyFilter } = getTasksFilter();
-
     const incompleteTasksCount = TasksCollection.find(pendingOnlyFilter).count();
     return incompleteTasksCount ? `(${incompleteTasksCount})` : '';
-  },
-
-  // useful part of getUser() is username, which is used in the template
-  getUser() {
-    return getUser();
-  },
-  isLoading() {
-    const instance = Template.instance();
-    return instance.state.get(IS_LOADING_STRING);
   },
 });
 
 Template.mainContainer.events({
+
+  // Upon "Hide Completed" button
   "click #hide-completed-button"(event, instance) {
 
       // TODO - If a task is "Completed" and the filter turns from "Show Incomplete" to "Show All", 
       // the task checkbox doesn't reflect the completed status, creating confusion
 
+      // 1. Get the state of the button
       const currentHideCompleted = instance.state.get(HIDE_COMPLETED_STRING);
+      // 2. Toggle the state of the button
       instance.state.set(HIDE_COMPLETED_STRING, !currentHideCompleted);
   },
+
+  // Clicking the name of the user must logout
   'click .user'() {
     Meteor.logout();
   },
 });
-
