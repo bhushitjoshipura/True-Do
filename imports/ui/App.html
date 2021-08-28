@@ -5,6 +5,9 @@
 <template name="form">
     <form class="task-form">
         <input type="text" name="text" placeholder="Type to add new tasks" />
+<!--         <input type="checkbox" name="want" checked="yes" class="toggle-want" />
+        <input type="checkbox" name="can" checked="can" class="toggle-can" />
+        <input type="checkbox" name="should" checked="should" class="toggle-should" /> -->
         <button type="submit">+</button>
     </form>
 </template>
@@ -28,9 +31,9 @@
                     <!--for showing only completed or all tasks-->
                     <button id="hide-completed-button">
                         {{#if hideCompleted}}
-                                Show All
+                                Admire
                         {{else}}
-                                Hide Completed
+                                Focus
                         {{/if}}
                     </button>
                 </div>
