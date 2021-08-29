@@ -7,9 +7,12 @@ import '/imports/api/tasksPublications';
 const SEED_USERNAME = 'meteorite';
 const SEED_PASSWORD = 'password';
 
-const insertTask = (taskText, user) =>
+const insertTask = (taskText, user, isWanted, isCan, isShould) =>
   TasksCollection.insert({
     text: taskText,
+    want: isWanted,
+    can: isCan,
+    should: isShould,
     userId: user._id,
     createdAt: new Date(),
   });
@@ -33,6 +36,6 @@ Meteor.startup(() => {
       'Fifth Task',
       'Sixth Task',
       'Seventh Task'
-    ].forEach(taskText => insertTask(taskText, user));
+    ].forEach(taskText => insertTask(taskText, user, true, true, true));
   }
 });
