@@ -1,57 +1,98 @@
 import { Template } from 'meteor/templating';
 import { TasksCollection } from "../db/TasksCollection";
-
 import './Task.html';
 
+Template.form.onCreated(function() {
+  this.state = new ReactiveDict();
+  this.state.setDefault({
+    isWanted: true,
+    isCan: true,
+    isShould: true
+  });
+});
 
 // this is called when the form inserts a task
-// TODO - we have to make sure the new task is by default want, can and should
 Template.form.events({
-  "submit .task-form"(event) {
+  "submit .task-form"(event, instance) {
+    console.log('called');
     // Prevent default browser form submit
     event.preventDefault();
 
     // Get value from form element
     const target = event.target;
     const text = target.text.value;
-/*     const want = target.want.value;
-    const can = target.can.value;
-    const should = target.should.value; */
 
-/*     console.log(want);
-    console.log(can);
-    console.log(should); */
+    // instance is the form itself
+    // so the reactive dictionary will apply to the form
+    const isWanted = instance.state.get("isWanted");
+    const isCan = instance.state.get("isCan");
+    const isShould = instance.state.get("isShould");
 
     // insert non-null text as tasks
     if (text != '') {
       // Insert a task into the collection
-      Meteor.call('tasks.insert', text);
+      Meteor.call('tasks.insert', text, isWanted, isCan, isShould);
+      console.log("inserted "+ text + "\nwant? " + isWanted + " can? " + isCan + " should? " + isShould);
     }
 
     // Clear form
+    // TODO- How can UI state change based on the default values of the is* items?
     target.text.value = '';
+    instance.state.setDefault({
+      isWanted: true,
+      isCan: true,
+      isShould: true
+    });
+  },
+  'click .enter-want'(event, instance) {
+    // Get value from form element
+    // while target is the checkbox, instance is the form itself
+    // so the reactive dictionary will apply to the form
+    const value = event.target.checked;
+    // set the state of isWanted
+    instance.state.set("isWanted", value);
+    console.log('want UI said '+ value +' set to be '+ instance.state.get("isWanted", value));
+  },
+
+  'click .enter-can'(event, instance) {
+    // Get value from form element
+    // while target is the checkbox, instance is the form itself
+    // so the reactive dictionary will apply to the form
+    const value = event.target.checked;
+    // set the state of isWanted
+    instance.state.set("isCan", value);
+    console.log('can UI said '+ value +' set to be '+ instance.state.get("isCan", value));
+  },
+
+  'click .enter-should'(event, instance) {
+    // Get value from form element
+    // while target is the checkbox, instance is the form itself
+    // so the reactive dictionary will apply to the form
+    const value = event.target.checked;
+    // set the state of isWanted
+    instance.state.set("isShould", value);
+    console.log('should UI said '+ value +' set to be '+ instance.state.get("isShould", value));
   }
 });
 
 Template.task.events({
-    'click .toggle-checked'() {
-        // Set the checked property to the opposite of its current value
-        Meteor.call('tasks.setIsChecked', this._id, !this.isChecked);        
-      },
-    'click .toggle-want'() {
-        // Set the checked property to the opposite of its current value
-        Meteor.call('tasks.want', this._id, !this.want);  
+  'click .toggle-checked'() {
+      // Set the checked property to the opposite of its current value
+      Meteor.call('tasks.setIsChecked', this._id, !this.isChecked);        
     },
-    'click .toggle-can'() {
-        // Set the checked property to the opposite of its current value
-        Meteor.call('tasks.can', this._id, !this.can); 
-      },
-    'click .toggle-should'() {
-        // Set the checked property to the opposite of its current value
-        Meteor.call('tasks.should', this._id, !this.should); 
-      },
-    'click .delete'() {
-        // TasksCollection.remove(this._id);
-        Meteor.call('tasks.remove', this._id);
-    },
+  'click .toggle-want'(event) {
+      console.log('sent '+event.target.checked);
+      Meteor.call('tasks.setWant', this._id, event.target.checked);  
+  },
+  'click .toggle-can'(event) {
+    console.log('sent '+event.target.checked);
+    Meteor.call('tasks.setCan', this._id, event.target.checked); 
+  },
+  'click .toggle-should'(event) {
+    console.log('sent '+event.target.checked);
+    Meteor.call('tasks.setShould', this._id, event.target.checked ); 
+  },
+  'click .delete'() {
+    Meteor.call('tasks.remove', this._id);
+  },
 });
