@@ -21,6 +21,7 @@ button {
   font-size: 1em;
   border: none;
   color: white;
+  background-color: red;
   box-shadow: 0 3px 3px rgba(34, 25, 25, 0.4);
   padding: 5px;
   cursor: pointer;
@@ -48,7 +49,7 @@ button:focus {
   flex-direction: column;
   flex-grow: 1;
   overflow: auto;
-  background: white;
+  background: lightgray;
 }
 
 .main::-webkit-scrollbar {
@@ -93,6 +94,22 @@ header {
   margin-right: 16px;
 }
 
+table {
+  style: "width:100%";
+}
+
+td {
+  text-align: center;
+  align-content: center;
+}
+
+table, th, td {
+  border: 1px solid black;
+  border-collapse: collapse;
+  style: "width:100%";
+}
+
+
 .task-form > input:focus {
   outline: 0;
 }
@@ -133,6 +150,23 @@ header {
 
 .filter > button {
   background-color: #62807e;
+}
+
+.sorter {
+  display: flex;
+  justify-content: center;
+}
+
+.sorter > button {
+  background-color: #80627e;
+}
+
+.add {
+  background-color: green;
+}
+
+.task > .delete {
+  background-color: red;
 }
 
 .login-form {
@@ -176,7 +210,7 @@ header {
   display: flex;
 
   align-self: flex-end;
-
+  color: white;
   margin: 8px 16px 0;
   font-weight: bold;
 }
