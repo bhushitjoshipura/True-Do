@@ -95,7 +95,7 @@ header {
 }
 
 table {
-  style: "width:100%";
+  width: 100%;
 }
 
 td {
@@ -106,7 +106,7 @@ td {
 table, th, td {
   border: 1px solid black;
   border-collapse: collapse;
-  style: "width:100%";
+  width: 100%;
 }
 
 
