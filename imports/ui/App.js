@@ -12,6 +12,7 @@ const getUser = () => Meteor.user();
 const isUserLogged = () => !!getUser();
 
 const HIDE_COMPLETED_STRING = "hideCompleted";
+const SORTING_STRATEGY_STRING = "sortingStragegy";
 const IS_LOADING_STRING = "isLoading";
 
 // this returns Mongo query strings to be used by mainContainer/tasks for list display
@@ -74,6 +75,7 @@ Template.mainContainer.helpers({
 
   // Must return a list of tasks meeting filters and sorting criteria
   // used as main container's "#each task"
+  // this is the implementation of the {{# each tasks}} {{/each}}
   tasks() {
     // no login, no tasks displayed
     if (!isUserLogged()) {
@@ -86,10 +88,48 @@ Template.mainContainer.helpers({
     const hideCompleted = instance.state.get(HIDE_COMPLETED_STRING);
     // and get which user we are talking about
     const { pendingOnlyFilter, userFilter } = getTasksFilter();
+
+    // now mood sorting
+    // if mood is specified, sort by the mood, else (in the beginning) by latest added first
+
+    sortingOrder = instance.state.get(SORTING_STRATEGY_STRING);
+    console.log(sortingOrder);
+
     // and depending on the UI state of hideCompleted, return the list of tasks
-    return TasksCollection.find(hideCompleted ? pendingOnlyFilter : userFilter, {
+/*     return TasksCollection.find(hideCompleted ? pendingOnlyFilter : userFilter, {
       sort: { createdAt: -1 },
-    }).fetch();
+    }).fetch(); */
+    if (sortingOrder == 'reckless') {
+      return TasksCollection.find(hideCompleted ? pendingOnlyFilter : userFilter, {
+        sort: {want:-1, can:-1, should:-1},
+      }).fetch();
+    } else if (sortingOrder == 'indulgent') {
+      return TasksCollection.find(hideCompleted ? pendingOnlyFilter : userFilter, {
+        sort: {want:-1, should:-1, can:-1},
+      }).fetch();
+    } else if (sortingOrder == 'candid') {
+      return TasksCollection.find(hideCompleted ? pendingOnlyFilter : userFilter, {
+        sort: { can:-1, want:-1, should:-1 },
+      }).fetch();
+    } else if (sortingOrder == 'sincere') {
+      return TasksCollection.find(hideCompleted ? pendingOnlyFilter : userFilter, {
+        sort: { can:-1, should:-1, want:-1 },
+      }).fetch();
+    } else if (sortingOrder == 'alive') {
+      return TasksCollection.find(hideCompleted ? pendingOnlyFilter : userFilter, {
+        sort: { should:-1, want:-1, can:-1  },
+      }).fetch();
+    } else if (sortingOrder == 'wise') {
+      return TasksCollection.find(hideCompleted ? pendingOnlyFilter : userFilter, {
+        sort: { should:-1, can:-1, want:-1 },
+      }).fetch();
+    } else {
+      return TasksCollection.find(hideCompleted ? pendingOnlyFilter : userFilter, {
+        sort: { createdAt: -1 },
+      }).fetch();
+    }
+
+
   },
 
   // to be displayed in the header
@@ -127,4 +167,35 @@ Template.mainContainer.events({
   'click .user'() {
     Meteor.logout();
   },
+
+  'click #reckless-button'(event, instance) {
+    console.log('reckless');
+    instance.state.set(SORTING_STRATEGY_STRING, 'reckless');
+  },
+
+  'click #indulgent-button'(event, instance) {
+    console.log('indulgent');
+    instance.state.set(SORTING_STRATEGY_STRING, 'indulgent');
+  },
+
+  'click #candid-button'(event, instance) {
+    console.log('candid');
+    instance.state.set(SORTING_STRATEGY_STRING, 'candid');
+  },
+
+  'click #sincere-button'(event, instance) {
+    console.log('sincere');
+    instance.state.set(SORTING_STRATEGY_STRING, 'sincere');
+  },
+
+  'click #alive-button'(event, instance) {
+    console.log('alive');
+    instance.state.set(SORTING_STRATEGY_STRING, 'alive');
+  }, 
+
+  'click #wise-button'(event, instance) {
+    console.log('wise');
+    instance.state.set(SORTING_STRATEGY_STRING, 'wise');
+  }, 
+
 });
