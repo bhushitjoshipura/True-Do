@@ -1,22 +1,10 @@
 <template name="task">
-        <div class="row">
-                <div class="col-sm-1" style="background-color: green; text-align: center;">
-                        <input type="checkbox" checked="{{checked}}" class="toggle-checked" />
-                </div>
-                <div class="col-sm-7" style="background-color: lightgoldenrodyellow;">
-                        {{text}}
-                </div>
-                <div class="col-sm-1" style="background-color: lightpink; text-align: center;">
-                        <input type="checkbox" checked="{{want}}" class="toggle-want" />
-                </div>
-                <div class="col-sm-1" style="background-color: lightgreen; text-align: center;">
-                        <input type="checkbox" checked="{{can}}" class="toggle-can" />
-                </div>
-                <div class="col-sm-1" style="background-color: orange; text-align: center;">
-                        <input type="checkbox" checked="{{should}}" class="toggle-should" />
-                </div>
-                <div class="col-sm-1" style="background-color: lightblue; text-align: center;">
-                        <button class="delete" style="background-color: red; color: white">&times;</button>
-                </div>      
-        </div>
+        <tr>
+        <td style="background-color: green; text-align: center;"><input type="checkbox" checked="{{checked}}" class="toggle-checked" /></td>
+        <td style="background-color: lightgoldenrodyellow;">{{text}}</td>
+        <td style="background-color: lightpink; text-align: center;"><input type="checkbox" checked="{{want}}" class="toggle-want" /></td>
+        <td style="background-color: lightgreen; text-align: center;"><input type="checkbox" checked="{{can}}" class="toggle-can" /></td>
+        <td style="background-color: orange; text-align: center;"><input type="checkbox" checked="{{should}}" class="toggle-should" /></td>
+        <td style="background-color: lightblue; text-align: center;"><button class="delete" style="background-color: red; color: white">&times;</button></td>
+        </tr>
 </template>

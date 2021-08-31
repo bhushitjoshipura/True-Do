@@ -1,5 +1,5 @@
 <body>
-    <div class="container" style="background-color:lightblue;">
+    <div class="container-flex" style="background-color:lightblue;">
         {{> mainContainer }}
     </div>
 </body>
@@ -10,23 +10,23 @@
             <div class="form-group col-sm-1" style="background-color: green; text-align: center;">
             </div>
             <div class="form-group col-sm-7" style="background-color: lightgoldenrodyellow; text-align: center;">
-                <label for="text">Goal</label>
+                <label for="text">&#128221;</label>
                 <input type="text" name="text" id="text" placeholder="Type to add new tasks" />
             </div>
             <div class="form-group col-sm-1" style="background-color: lightpink; text-align: center;">
-                <label for="want">Want?</label>
+                <label for="want">&#10084;&#65039;?</label>
                 <input type="checkbox" name="want" class="enter-want" checked/>
             </div>
             <div class="form-group col-sm-1" style="background-color: lightgreen; text-align: center;">
-                <label for="Can">Can?</label>
+                <label for="Can">&#128170;?</label>
                 <input type="checkbox" name="can" class="enter-can" checked/>
             </div>
             <div class="form-group col-sm-1" style="background-color: orange; text-align: center;">
-                <label for="Can">Should?</label>
+                <label for="Can">&#9878;&#65039;?</label>
                 <input type="checkbox" name="should" class="enter-should" checked/>
             </div>
             <div class="form-group col-sm-1" style="background-color:lightblue; text-align: center;">
-                <label for="Enter">Enter</label>    
+                <!-- <label for="Enter">Enter</label>   -->  
                 <button id="Enter" type="submit" style="background-color: green; color: white">+</button>
             </div>
         </div>
@@ -37,13 +37,13 @@
     <div class="row" style="background-color:lightblue;">
         <div class="col-sm-10" >
             <header>
-                <h1>📝️ True-Do List {{incompleteCount}} </h1>
+                <h3>📝️ True-Do List {{incompleteCount}} </h3>
             </header>
         </div>
         <div class="col-sm-2">
             {{#if isUserLogged}}
                 <!--for logout-->
-                <div class="user">{{getUser.username}}</div>
+                <h5>Hello {{getUser.username}}</h5>
             {{/if}}
         </div>
     </div>
@@ -53,7 +53,7 @@
                 <div class="filter" style="background-color: lightblue;">
                     I am
                     <!--for showing only completed or all tasks-->
-                    <button id="hide-completed-button" style="background-color: lightblue;">
+                    <button class="btn" id="hide-completed-button" style="background-color: lightskyblue;">
                         {{#if hideCompleted}}
                                 focusing on what is remaining
                         {{else}}
@@ -77,20 +77,23 @@
                     <div class="loading">loading...</div>
                 {{/if}}
 
-                <div class="row">
-                    <div class="col-sm-1" style="background-color: green; text-align: center;">Done</div>
-                    <div class="col-sm-7" style="background-color: lightgoldenrodyellow; text-align: center;">Goal</div>
-                    <div class="col-sm-1" style="background-color: lightpink; text-align: center;">Want</div>
-                    <div class="col-sm-1" style="background-color: lightgreen; text-align: center;">Can</div>
-                    <div class="col-sm-1" style="background-color: orange; text-align: center;">Should</div>
-                    <div class="col-sm-1" style="background-color: lightblue; text-align: center;">Delete</div>                
-                </div>
-
-                {{#each tasks}}
-                    {{> task}}
-                {{/each}}
-
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th style="background-color: green; text-align: center;">&#127919;</th>
+                            <th style="background-color: lightgoldenrodyellow; text-align: center;">&#128221;</th>
+                            <th style="background-color: lightpink; text-align: center;">&#10084;&#65039;</th>
+                            <th style="background-color: lightgreen; text-align: center;">&#128170;</th>
+                            <th style="background-color: orange; text-align: center;">&#9878;&#65039;</th>
+                            <th style="background-color: lightblue; text-align: center;">&#128465;&#65039;</th>                               
+                        </tr>
+                    </thead>
+                    {{#each tasks}}
+                        {{> task}}
+                    {{/each}}
+                </table>
             </div>
+
         {{else}}
             <!--for showing login-->
             {{> login}}
