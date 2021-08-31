@@ -1,6 +1,10 @@
 <template name="task">
         <tr>
-        <td style="background-color: green; text-align: center;"><input type="checkbox" checked="{{checked}}" class="toggle-checked" /></td>
+        {{#if isChecked}}
+                <td style="background-color: green; text-align: center;"><input type="checkbox" checked class="toggle-checked" /></td>
+        {{else}}
+               <td style="background-color: green; text-align: center;"><input type="checkbox" class="toggle-checked" /></td>
+        {{/if}}
         <td style="background-color: lightgoldenrodyellow;">{{text}}</td>
         <td style="background-color: lightpink; text-align: center;"><input type="checkbox" checked="{{want}}" class="toggle-want" /></td>
         <td style="background-color: lightgreen; text-align: center;"><input type="checkbox" checked="{{can}}" class="toggle-can" /></td>
