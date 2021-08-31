@@ -43,7 +43,7 @@
         <div class="col-sm-2">
             {{#if isUserLogged}}
                 <!--for logout-->
-                <h5>Hello {{getUser.username}}</h5>
+                <h5>&#128081; {{getUser.username}}</h5>
             {{/if}}
         </div>
     </div>
@@ -53,11 +53,11 @@
                 <div class="filter" style="background-color: lightblue;">
                     I am
                     <!--for showing only completed or all tasks-->
-                    <button class="btn" id="hide-completed-button" style="background-color: lightskyblue;">
+                    <button class="btn" id="hide-completed-button" style="background-color: greenyellow;">
                         {{#if hideCompleted}}
-                                focusing on what is remaining
+                                focusing on what is remaining &#128300;
                         {{else}}
-                                admiring overall picture
+                                admiring overall picture &#127760;
                         {{/if}}
                     </button>
                 </div>
@@ -74,7 +74,7 @@
 
                 <!--for showing "loading..." when tasks aren't ready. Defined as a helper in App.js/mainContainer/helper/isLoading-->
                 {{#if isLoading}}
-                    <div class="loading">loading...</div>
+                    <div class="loading">&#9203;</div>
                 {{/if}}
 
                 <table class="table">
