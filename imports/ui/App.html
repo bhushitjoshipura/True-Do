@@ -1,107 +1,99 @@
 <body>
-    {{> mainContainer }}
+    <div class="container" style="background-color:lightblue;">
+        {{> mainContainer }}
+    </div>
 </body>
-
-<!-- <template name="form">
-    <table> 
-        <div class="dummy">
-            <tr>
-                <th>Enter</th>
-                <th>Goal</th>
-                <th>Want?</th>
-                <th>Can?</th>
-                <th>Should?</th>
-                <th>Add</th>
-            </tr>
-        </div>
-        <div class="dummy">       
-        <tr>
-                <td></td>
-            <form class="task-form">
-                <td><input type="text" name="text" placeholder="Type to add new tasks" /></td>
-                <td><input type="checkbox" name="want" class="enter-want" checked/></td>
-                <td><input type="checkbox" name="can" class="enter-can" checked/></td>
-                <td><input type="checkbox" name="should" class="enter-should" checked/></td>
-                <td><button type="submit">+</button></td>
-            </form>
-        </tr>
-        </div>
-    </table>
-</template> -->
 
 <template name="form">
     <form class="task-form">
-        <input type="text" name="text" placeholder="Type to add new tasks" />
-        <input type="checkbox" name="want" class="enter-want" checked/>
-        <input type="checkbox" name="can" class="enter-can" checked/>
-        <input type="checkbox" name="should" class="enter-should" checked/>
-        <button type="submit">+</button>
+        <div class="form-row">
+            <div class="form-group col-sm-1" style="background-color: green; text-align: center;">
+            </div>
+            <div class="form-group col-sm-7" style="background-color: lightgoldenrodyellow; text-align: center;">
+                <label for="text">Goal</label>
+                <input type="text" name="text" id="text" placeholder="Type to add new tasks" />
+            </div>
+            <div class="form-group col-sm-1" style="background-color: lightpink; text-align: center;">
+                <label for="want">Want?</label>
+                <input type="checkbox" name="want" class="enter-want" checked/>
+            </div>
+            <div class="form-group col-sm-1" style="background-color: lightgreen; text-align: center;">
+                <label for="Can">Can?</label>
+                <input type="checkbox" name="can" class="enter-can" checked/>
+            </div>
+            <div class="form-group col-sm-1" style="background-color: orange; text-align: center;">
+                <label for="Can">Should?</label>
+                <input type="checkbox" name="should" class="enter-should" checked/>
+            </div>
+            <div class="form-group col-sm-1" style="background-color:lightblue; text-align: center;">
+                <label for="Enter">Enter</label>    
+                <button id="Enter" type="submit" style="background-color: green; color: white">+</button>
+            </div>
+        </div>
     </form>
 </template>
 
 <template name="mainContainer">
-    <div class="app">
-        <header>
-            <div class="app-bar">
-                <div class="app-header">
-                    <h1>📝️ True-Do List {{incompleteCount}} </h1>
-                </div>
-            </div>
-        </header>
+    <div class="row" style="background-color:lightblue;">
+        <div class="col-sm-10" >
+            <header>
+                <h1>📝️ True-Do List {{incompleteCount}} </h1>
+            </header>
+        </div>
+        <div class="col-sm-2">
+            {{#if isUserLogged}}
+                <!--for logout-->
+                <div class="user">{{getUser.username}}</div>
+            {{/if}}
+        </div>
+    </div>
         {{#if isUserLogged}}
-            <!--for logout-->
-            <div class="user">{{getUser.username}}</div>
-            <div class="main">
-                <!--for new task-->
+            <div class="main" style="background-color: lightblue;">
                 {{> form }}
-            <table class="task">
-                <tr>
-                    <td>
-                        <div class="filter">
-                            <!--for showing only completed or all tasks-->
-                            <button id="hide-completed-button">
-                                {{#if hideCompleted}}
-                                        Admire
-                                {{else}}
-                                        Focus
-                                {{/if}}
-                            </button>
-                        </div>
-                    </td>
-                    <td><div class="sorter"><button id="reckless-button">Reckless</button></div></td>
-                    <td><div class="sorter"><button id="indulgent-button">Indulgent</button></div></td>
-                    <td><div class="sorter"><button id="candid-button">Candid</button></div></td>
-                    <td><div class="sorter"><button id="sincere-button">Sincere</button></div></td>
-                    <td><div class="sorter"><button id="alive-button">Alive</button></div></td>
-                    <td><div class="sorter"><button id="wise-button">Wise</button></div></td>                             
-                </tr>
-            </table>
+                <div class="filter" style="background-color: lightblue;">
+                    I am
+                    <!--for showing only completed or all tasks-->
+                    <button id="hide-completed-button" style="background-color: lightblue;">
+                        {{#if hideCompleted}}
+                                focusing on what is remaining
+                        {{else}}
+                                admiring overall picture
+                        {{/if}}
+                    </button>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-1">I am feeling</div>
+                    <div class="col-sm-1"><button id="reckless-button" style="background-color: red; color: white">Reckless</button></div>
+                    <div class="col-sm-1"><button id="indulgent-button" style="background-color: lightpink;">Indulgent</button></div>
+                    <div class="col-sm-1"><button id="candid-button" style="background-color: lightgreen;">Candid </button></div>
+                    <div class="col-sm-1"><button id="sincere-button" style="background-color: greenyellow;">Sincere</button></div>
+                    <div class="col-sm-1"><button id="alive-button" style="background-color: lightsalmon;">Alive</button></div>
+                    <div class="col-sm-1"><button id="wise-button" style="background-color: orange;">Wise</button></div>
+                </div>
 
                 <!--for showing "loading..." when tasks aren't ready. Defined as a helper in App.js/mainContainer/helper/isLoading-->
                 {{#if isLoading}}
                     <div class="loading">loading...</div>
                 {{/if}}
-                <!--Text headers of various parts-->
-                <table>
-                <!--for showing task list-->
-                <ul class="tasks">
-                    <tr>
-                        <th>Done</th>
-                        <th>Goal</th>
-                        <th>Want</th>
-                        <th>Can</th>
-                        <th>Should</th>
-                        <th>Delete</th>
-                    </tr>
-                    {{#each tasks}}
-                        {{> task}}
-                    {{/each}}
-                </ul>
-            </table>
+
+                <div class="row">
+                    <div class="col-sm-1" style="background-color: green; text-align: center;">Done</div>
+                    <div class="col-sm-7" style="background-color: lightgoldenrodyellow; text-align: center;">Goal</div>
+                    <div class="col-sm-1" style="background-color: lightpink; text-align: center;">Want</div>
+                    <div class="col-sm-1" style="background-color: lightgreen; text-align: center;">Can</div>
+                    <div class="col-sm-1" style="background-color: orange; text-align: center;">Should</div>
+                    <div class="col-sm-1" style="background-color: lightblue; text-align: center;">Delete</div>                
+                </div>
+
+                {{#each tasks}}
+                    {{> task}}
+                {{/each}}
+
             </div>
         {{else}}
             <!--for showing login-->
             {{> login}}
         {{/if}}
-    </div>
+    <!-- </div> -->
 </template>
