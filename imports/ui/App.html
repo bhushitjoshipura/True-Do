@@ -41,10 +41,12 @@
             </header>
         </div>
         <div class="col-sm-2">
-            {{#if isUserLogged}}
-                <!--for logout-->
-                <h5>&#128081; {{getUser.username}}</h5>
-            {{/if}}
+            <div class="user">
+                {{#if isUserLogged}}
+                    <!--for logout-->
+                    <h5>&#128081; {{getUser.username}}</h5>
+                {{/if}}
+            </div>
         </div>
     </div>
         {{#if isUserLogged}}
