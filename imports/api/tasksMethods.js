@@ -62,7 +62,7 @@ Meteor.methods({
   'tasks.setWant' (taskId, isWanted) {
     check(taskId, String);
     check(isWanted, Boolean);
-    console.log('received '+isWanted);
+    /* console.log('received '+isWanted); */
 
     if (!this.userId) {
       throw new Meteor.Error('Not authorized.');
@@ -82,7 +82,7 @@ Meteor.methods({
   'tasks.setCan' (taskId, isCan) {
     check(taskId, String);
     check(isCan, Boolean);
-    console.log('received '+isCan);
+    /* console.log('received '+isCan); */
 
     if (!this.userId) {
       throw new Meteor.Error('Not authorized.');
@@ -102,7 +102,7 @@ Meteor.methods({
   'tasks.setShould' (taskId, isShould) {
     check(taskId, String);
     check(isShould, Boolean);
-    console.log('received '+isShould);
+    /* console.log('received '+isShould); */
 
     if (!this.userId) {
       throw new Meteor.Error('Not authorized.');

@@ -14,7 +14,7 @@ Template.form.onCreated(function() {
 // this is called when the form inserts a task
 Template.form.events({
   "submit .task-form"(event, instance) {
-    console.log('called');
+    /* console.log('called'); */
     // Prevent default browser form submit
     event.preventDefault();
 
@@ -32,7 +32,7 @@ Template.form.events({
     if (text != '') {
       // Insert a task into the collection
       Meteor.call('tasks.insert', text, isWanted, isCan, isShould);
-      console.log("inserted "+ text + "\nwant? " + isWanted + " can? " + isCan + " should? " + isShould);
+      /* console.log("inserted "+ text + "\nwant? " + isWanted + " can? " + isCan + " should? " + isShould); */
     }
 
     // Clear form
@@ -51,7 +51,7 @@ Template.form.events({
     const value = event.target.checked;
     // set the state of isWanted
     instance.state.set("isWanted", value);
-    console.log('want UI said '+ value +' set to be '+ instance.state.get("isWanted", value));
+    /* console.log('want UI said '+ value +' set to be '+ instance.state.get("isWanted", value)); */
   },
 
   'click .enter-can'(event, instance) {
@@ -61,7 +61,7 @@ Template.form.events({
     const value = event.target.checked;
     // set the state of isWanted
     instance.state.set("isCan", value);
-    console.log('can UI said '+ value +' set to be '+ instance.state.get("isCan", value));
+    /* console.log('can UI said '+ value +' set to be '+ instance.state.get("isCan", value)); */
   },
 
   'click .enter-should'(event, instance) {
@@ -71,7 +71,7 @@ Template.form.events({
     const value = event.target.checked;
     // set the state of isWanted
     instance.state.set("isShould", value);
-    console.log('should UI said '+ value +' set to be '+ instance.state.get("isShould", value));
+    /* console.log('should UI said '+ value +' set to be '+ instance.state.get("isShould", value)); */
   }
 });
 
@@ -81,15 +81,15 @@ Template.task.events({
       Meteor.call('tasks.setIsChecked', this._id, !this.isChecked);        
     },
   'click .toggle-want'(event) {
-      console.log('sent '+event.target.checked);
+      /* console.log('sent '+event.target.checked); */
       Meteor.call('tasks.setWant', this._id, event.target.checked);  
   },
   'click .toggle-can'(event) {
-    console.log('sent '+event.target.checked);
+    /* console.log('sent '+event.target.checked); */
     Meteor.call('tasks.setCan', this._id, event.target.checked); 
   },
   'click .toggle-should'(event) {
-    console.log('sent '+event.target.checked);
+    /* console.log('sent '+event.target.checked); */
     Meteor.call('tasks.setShould', this._id, event.target.checked ); 
   },
   'click .delete'() {

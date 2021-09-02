@@ -93,7 +93,7 @@ Template.mainContainer.helpers({
     // if mood is specified, sort by the mood, else (in the beginning) by latest added first
 
     sortingOrder = instance.state.get(SORTING_STRATEGY_STRING);
-    console.log(sortingOrder);
+    /* console.log(sortingOrder); */
 
     // and depending on the UI state of hideCompleted, return the list of tasks
 /*     return TasksCollection.find(hideCompleted ? pendingOnlyFilter : userFilter, {
@@ -169,32 +169,32 @@ Template.mainContainer.events({
   },
 
   'click #reckless-button'(event, instance) {
-    console.log('reckless');
+    /* console.log('reckless'); */
     instance.state.set(SORTING_STRATEGY_STRING, 'reckless');
   },
 
   'click #indulgent-button'(event, instance) {
-    console.log('indulgent');
+    /* console.log('indulgent'); */
     instance.state.set(SORTING_STRATEGY_STRING, 'indulgent');
   },
 
   'click #candid-button'(event, instance) {
-    console.log('candid');
+    /* console.log('candid'); */
     instance.state.set(SORTING_STRATEGY_STRING, 'candid');
   },
 
   'click #sincere-button'(event, instance) {
-    console.log('sincere');
+    /* console.log('sincere'); */
     instance.state.set(SORTING_STRATEGY_STRING, 'sincere');
   },
 
   'click #alive-button'(event, instance) {
-    console.log('alive');
+    /* console.log('alive'); */
     instance.state.set(SORTING_STRATEGY_STRING, 'alive');
   }, 
 
   'click #wise-button'(event, instance) {
-    console.log('wise');
+    /* console.log('wise'); */
     instance.state.set(SORTING_STRATEGY_STRING, 'wise');
   }, 
 
