@@ -6,6 +6,8 @@ import '/imports/api/tasksPublications';
 
 const SEED_USERNAME = 'meteorite';
 const SEED_PASSWORD = 'password';
+const SECOND_USERNAME = 'test';
+const SECOND_PASSWORD = 'password';
 
 const insertTask = (taskText, user, isWanted, isCan, isShould) =>
   TasksCollection.insert({
@@ -22,7 +24,14 @@ Meteor.startup(() => {
     Accounts.createUser({
       username: SEED_USERNAME,
       password: SEED_PASSWORD,
-    });
+    });   
+  }
+
+  if (!Accounts.findUserByUsername(SECOND_USERNAME)) {
+    Accounts.createUser({
+      username: SECOND_USERNAME,
+      password: SECOND_PASSWORD,
+    }); 
   }
 
   const user = Accounts.findUserByUsername(SEED_USERNAME);
