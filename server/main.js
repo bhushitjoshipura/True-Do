@@ -4,10 +4,10 @@ import { TasksCollection } from '/imports/db/TasksCollection';
 import '/imports/api/tasksMethods';
 import '/imports/api/tasksPublications';
 
-const SEED_USERNAME = 'meteorite';
+/* const SEED_USERNAME = 'meteorite';
 const SEED_PASSWORD = 'password';
 const SECOND_USERNAME = 'test';
-const SECOND_PASSWORD = 'password';
+const SECOND_PASSWORD = 'password'; */
 
 const insertTask = (taskText, user, isWanted, isCan, isShould) =>
   TasksCollection.insert({
@@ -20,7 +20,10 @@ const insertTask = (taskText, user, isWanted, isCan, isShould) =>
   });
  
 Meteor.startup(() => {
-  if (!Accounts.findUserByUsername(SEED_USERNAME)) {
+
+  // This is clean but it breaks the logout button and greeting in the title bar
+
+/*   if (!Accounts.findUserByUsername(SEED_USERNAME)) {
     Accounts.createUser({
       username: SEED_USERNAME,
       password: SEED_PASSWORD,
@@ -34,7 +37,7 @@ Meteor.startup(() => {
     }); 
   }
 
-  const user = Accounts.findUserByUsername(SEED_USERNAME);
+  const user = Accounts.findUserByUsername(SEED_USERNAME); */
 
 /*   if (TasksCollection.find().count() === 0) {
     [
