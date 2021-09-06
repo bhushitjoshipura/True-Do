@@ -38,7 +38,7 @@ Meteor.methods({
     TasksCollection.remove(taskId);
   },
  
-  'tasks.setIsChecked'(taskId, isChecked) {
+  'tasks.updateIsChecked'(taskId, isChecked) {
     check(taskId, String);
     check(isChecked, Boolean);
     if (!this.userId) {
@@ -59,7 +59,7 @@ Meteor.methods({
     });
   },
 
-  'tasks.setWant' (taskId, isWanted) {
+  'tasks.updateWant' (taskId, isWanted) {
     check(taskId, String);
     check(isWanted, Boolean);
     /* console.log('received '+isWanted); */
@@ -79,7 +79,7 @@ Meteor.methods({
     });
   },
 
-  'tasks.setCan' (taskId, isCan) {
+  'tasks.updateCan' (taskId, isCan) {
     check(taskId, String);
     check(isCan, Boolean);
     /* console.log('received '+isCan); */
@@ -99,7 +99,7 @@ Meteor.methods({
     });
   },
 
-  'tasks.setShould' (taskId, isShould) {
+  'tasks.updateShould' (taskId, isShould) {
     check(taskId, String);
     check(isShould, Boolean);
     /* console.log('received '+isShould); */

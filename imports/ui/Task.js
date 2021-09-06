@@ -44,7 +44,7 @@ Template.form.events({
       isShould: true
     });
   },
-  'click .enter-want'(event, instance) {
+  'click .update-want'(event, instance) {
     // Get value from form element
     // while target is the checkbox, instance is the form itself
     // so the reactive dictionary will apply to the form
@@ -54,7 +54,7 @@ Template.form.events({
     /* console.log('want UI said '+ value +' set to be '+ instance.state.get("isWanted", value)); */
   },
 
-  'click .enter-can'(event, instance) {
+  'click .update-can'(event, instance) {
     // Get value from form element
     // while target is the checkbox, instance is the form itself
     // so the reactive dictionary will apply to the form
@@ -64,7 +64,7 @@ Template.form.events({
     /* console.log('can UI said '+ value +' set to be '+ instance.state.get("isCan", value)); */
   },
 
-  'click .enter-should'(event, instance) {
+  'click .update-should'(event, instance) {
     // Get value from form element
     // while target is the checkbox, instance is the form itself
     // so the reactive dictionary will apply to the form
@@ -77,20 +77,20 @@ Template.form.events({
 
 Template.task.events({
   'click .toggle-checked'() {
-      // Set the checked property to the opposite of its current value
-      Meteor.call('tasks.setIsChecked', this._id, !this.isChecked);        
+      // update the checked property to the opposite of its current value
+      Meteor.call('tasks.updateIsChecked', this._id, !this.isChecked);        
     },
   'click .toggle-want'(event) {
       /* console.log('sent '+event.target.checked); */
-      Meteor.call('tasks.setWant', this._id, event.target.checked);  
+      Meteor.call('tasks.updateWant', this._id, event.target.checked);  
   },
   'click .toggle-can'(event) {
     /* console.log('sent '+event.target.checked); */
-    Meteor.call('tasks.setCan', this._id, event.target.checked); 
+    Meteor.call('tasks.updateCan', this._id, event.target.checked); 
   },
   'click .toggle-should'(event) {
     /* console.log('sent '+event.target.checked); */
-    Meteor.call('tasks.setShould', this._id, event.target.checked ); 
+    Meteor.call('tasks.updateShould', this._id, event.target.checked ); 
   },
   'click .delete'() {
     Meteor.call('tasks.remove', this._id);
