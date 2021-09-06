@@ -12,7 +12,7 @@ const getUser = () => Meteor.user();
 const isUserLogged = () => !!getUser();
 
 const HIDE_COMPLETED_STRING = "hideCompleted";
-const SORTING_STRATEGY_STRING = "sortingStragegy";
+const SORTING_STRATEGY_STRING = "sortingStrategy";
 const IS_LOADING_STRING = "isLoading";
 
 // this returns Mongo query strings to be used by mainContainer/tasks for list display
@@ -96,47 +96,9 @@ Template.mainContainer.helpers({
     /* console.log(sortingOrder); */
 
     // and depending on the UI state of hideCompleted, return the list of tasks
-/*     return TasksCollection.find(hideCompleted ? pendingOnlyFilter : userFilter, {
-      sort: { createdAt: -1 },
-    }).fetch(); */
-    if (sortingOrder == 'reckless') {
-      return TasksCollection.find(hideCompleted ? pendingOnlyFilter : userFilter, {
-        sort: {want:-1, can:-1, should:-1},
-      }).fetch();
-    } else if (sortingOrder == 'indulgent') {
-      return TasksCollection.find(hideCompleted ? pendingOnlyFilter : userFilter, {
-        sort: {want:-1, should:-1, can:-1},
-      }).fetch();
-    } else if (sortingOrder == 'candid') {
-      return TasksCollection.find(hideCompleted ? pendingOnlyFilter : userFilter, {
-        sort: { can:-1, want:-1, should:-1 },
-      }).fetch();
-    } else if (sortingOrder == 'sincere') {
-      return TasksCollection.find(hideCompleted ? pendingOnlyFilter : userFilter, {
-        sort: { can:-1, should:-1, want:-1 },
-      }).fetch();
-    } else if (sortingOrder == 'alive') {
-      return TasksCollection.find(hideCompleted ? pendingOnlyFilter : userFilter, {
-        sort: { should:-1, want:-1, can:-1  },
-      }).fetch();
-    } else if (sortingOrder == 'wise') {
-      return TasksCollection.find(hideCompleted ? pendingOnlyFilter : userFilter, {
-        sort: { should:-1, can:-1, want:-1 },
-      }).fetch();
-    } else if (sortingOrder == 'vengeful') {
-      return TasksCollection.find(hideCompleted ? pendingOnlyFilter : userFilter, {
-        sort: { createdAt: 1 },
-      }).fetch();
-    } else if (sortingOrder == 'quick') {
-      return TasksCollection.find(hideCompleted ? pendingOnlyFilter : userFilter, {
-        sort: { createdAt: -1 },
-      }).fetch();     
-    } else {
-      return TasksCollection.find(hideCompleted ? pendingOnlyFilter : userFilter, {
-        sort: { createdAt: -1 },
-      }).fetch();
-    }
-
+    return TasksCollection.find(hideCompleted ? pendingOnlyFilter : userFilter, {
+      sort: sortingOrder,
+    }).fetch();
   },
 
   // to be displayed in the header
@@ -177,41 +139,42 @@ Template.mainContainer.events({
 
   'click #reckless-button'(event, instance) {
     /* console.log('reckless'); */
-    instance.state.set(SORTING_STRATEGY_STRING, 'reckless');
+    /* instance.state.set(SORTING_STRATEGY_STRING, 'reckless'); */
+    instance.state.set(SORTING_STRATEGY_STRING, {want:-1, can:-1, should:-1});
   },
 
   'click #indulgent-button'(event, instance) {
     /* console.log('indulgent'); */
-    instance.state.set(SORTING_STRATEGY_STRING, 'indulgent');
+    instance.state.set(SORTING_STRATEGY_STRING, {want:-1, should:-1, can:-1});
   },
 
   'click #candid-button'(event, instance) {
     /* console.log('candid'); */
-    instance.state.set(SORTING_STRATEGY_STRING, 'candid');
+    instance.state.set(SORTING_STRATEGY_STRING, { can:-1, want:-1, should:-1 });
   },
 
   'click #sincere-button'(event, instance) {
     /* console.log('sincere'); */
-    instance.state.set(SORTING_STRATEGY_STRING, 'sincere');
+    instance.state.set(SORTING_STRATEGY_STRING, { can:-1, should:-1, want:-1 });
   },
 
   'click #alive-button'(event, instance) {
     /* console.log('alive'); */
-    instance.state.set(SORTING_STRATEGY_STRING, 'alive');
+    instance.state.set(SORTING_STRATEGY_STRING, { should:-1, want:-1, can:-1  });
   }, 
 
   'click #wise-button'(event, instance) {
     /* console.log('wise'); */
-    instance.state.set(SORTING_STRATEGY_STRING, 'wise');
+    instance.state.set(SORTING_STRATEGY_STRING, { should:-1, can:-1, want:-1 });
   }, 
 
   'click #vengeful-button'(event, instance) {
     /* console.log('wise'); */
-    instance.state.set(SORTING_STRATEGY_STRING, 'vengeful');
+    instance.state.set(SORTING_STRATEGY_STRING, { createdAt: 1 });
   }, 
 
   'click #quick-button'(event, instance) {
     /* console.log('wise'); */
-    instance.state.set(SORTING_STRATEGY_STRING, 'quick');
+    instance.state.set(SORTING_STRATEGY_STRING, { createdAt: -1 });
   }, 
 });
