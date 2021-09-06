@@ -123,12 +123,19 @@ Template.mainContainer.helpers({
       return TasksCollection.find(hideCompleted ? pendingOnlyFilter : userFilter, {
         sort: { should:-1, can:-1, want:-1 },
       }).fetch();
+    } else if (sortingOrder == 'vengeful') {
+      return TasksCollection.find(hideCompleted ? pendingOnlyFilter : userFilter, {
+        sort: { createdAt: 1 },
+      }).fetch();
+    } else if (sortingOrder == 'quick') {
+      return TasksCollection.find(hideCompleted ? pendingOnlyFilter : userFilter, {
+        sort: { createdAt: -1 },
+      }).fetch();     
     } else {
       return TasksCollection.find(hideCompleted ? pendingOnlyFilter : userFilter, {
         sort: { createdAt: -1 },
       }).fetch();
     }
-
 
   },
 
@@ -198,4 +205,13 @@ Template.mainContainer.events({
     instance.state.set(SORTING_STRATEGY_STRING, 'wise');
   }, 
 
+  'click #vengeful-button'(event, instance) {
+    /* console.log('wise'); */
+    instance.state.set(SORTING_STRATEGY_STRING, 'vengeful');
+  }, 
+
+  'click #quick-button'(event, instance) {
+    /* console.log('wise'); */
+    instance.state.set(SORTING_STRATEGY_STRING, 'quick');
+  }, 
 });
