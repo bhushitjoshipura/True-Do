@@ -36,7 +36,7 @@ Meteor.startup(() => {
 
   const user = Accounts.findUserByUsername(SEED_USERNAME);
 
-  if (TasksCollection.find().count() === 0) {
+/*   if (TasksCollection.find().count() === 0) {
     [
       'First Task',
       'Second Task',
@@ -46,5 +46,5 @@ Meteor.startup(() => {
       'Sixth Task',
       'Seventh Task'
     ].forEach(taskText => insertTask(taskText, user, true, true, true));
-  }
+  } */
 });
