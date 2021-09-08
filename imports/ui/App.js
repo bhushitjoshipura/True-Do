@@ -67,7 +67,7 @@ Template.mainContainer.helpers({
   },
 
   getEmail() {
-    console.log(getUser().emails[0].address);
+    /* console.log(getUser().emails[0].address); */
     return getUser().emails[0].address;
   },
 
