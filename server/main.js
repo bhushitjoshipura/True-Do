@@ -35,7 +35,8 @@ Meteor.startup(() => {
       username: SECOND_USERNAME,
       password: SECOND_PASSWORD,
     }); 
-  }
+  } */
+  /*
 
   const user = Accounts.findUserByUsername(SEED_USERNAME); */
 
