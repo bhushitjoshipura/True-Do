@@ -62,7 +62,13 @@ Template.mainContainer.helpers({
   // useful part of getUser() is username, which is used in the template
   // defined here because global getUser() can't be used as a part of the template?
   getUser() {
-    return getUser();
+    if (getUser()) return getUser();
+    else return false;
+  },
+
+  getEmail() {
+    console.log(getUser().emails[0].address);
+    return getUser().emails[0].address;
   },
 
   //------------------- Task List Related -------------------

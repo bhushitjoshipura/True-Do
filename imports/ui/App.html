@@ -44,7 +44,11 @@
             <div class="user">
                 {{#if isUserLogged}}
                     <!--for logout-->
-                    <h5>&#128081; {{getUser.username}}</h5>
+                    {{#if getUser.username}}
+                        <h5>&#128081; {{getUser.username}}</h5>
+                    {{else}}
+                        <h5>&#128081; {{getEmail}}</h5>
+                    {{/if}}
                 {{/if}}
             </div>
         </div>
