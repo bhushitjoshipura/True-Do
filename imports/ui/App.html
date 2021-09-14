@@ -35,13 +35,23 @@
 
 <template name="mainContainer">
     <div class="row" style="background-color:lightblue;">
+        <!-- Header, visible unconditionally-->
         <div class="col-sm-10" >
             <header><h4>📝️ True-Do {{incompleteCount}}</h4></header>
         </div>
 
         {{#if isUserLogged}}
-            <div class="col-sm-2">
+            <div class="col-sm-2">                
                 <div class="btn-group">
+                    <!-- Form popper, should set "entering" -->
+                    <button type="button" class="btn btn-secondary" id="form-show-button" style="background-color: green; color:white">
+                        {{#if entering}}
+                            &minus;
+                        {{else}}
+                            &plus;
+                        {{/if}}
+                    </button>
+
                     <!-- Focus selector-->
                     <button type="button" class="btn btn-secondary" id="hide-completed-button" style="background-color: lightskyblue;">
                         {{#if hideCompleted}}
@@ -51,22 +61,23 @@
                         {{/if}}                   
                     </button>
 
-                    <!-- Mood selector -->
+                    <!-- Mood selector, Dropdown -->
                     <select class="form-select" name="mood" id="mood" style="background-color: lightskyblue;">
                         <option value="reckless" id="reckless-button" style="background-color: lightskyblue;">&#129347;</option>
                         <option value="indulgent" id="indulgent-button" style="background-color: lightskyblue;">&#127851;</option>
                         <option value="candid" id="candid-button" style="background-color: lightskyblue;">&#128170;&#10084;&#65039;&#9878;&#65039;</option>
                         <option value="sincere" id="sincere-button" style="background-color: lightskyblue;">&#128170;&#9878;&#65039;&#10084;&#65039;</option>
                         <option value="alive" id="alive-button" style="background-color: lightskyblue;">&#9878;&#65039;&#10084;&#65039;&#128170;</option>
-                        <option value="wise" id="wise-button" style="background-color: lightskyblue;">&#129417;</option>
+                        <option value="wise" id="wise-button" style="background-color: lightskyblue;" selected>&#129417;</option>
                         <option value="vengeful" id="vengeful-button" style="background-color: lightskyblue;">&#129529;</option>
                         <option value="quick" id="quick-button" style="background-color: lightskyblue;">&#128658;</option>                
                     </select>
 
                     <!-- Logout button-->
-                    <button type="button" class="btn btn-secondary" style="background-color: lightskyblue;">
+                    <button type="button" class="btn btn-secondary" style="background-color: lightpink;">
                         <div class="user">&#128682;</div>                        
                     </button>
+
                 </div>
             </div>
         {{/if}}
@@ -75,7 +86,9 @@
         {{#if isUserLogged}}
             <div class="main" style="background-color: lightblue;">
                 <!-- Static HTML, show immediately-->
-                {{> form }}
+                {{#if entering}}
+                    {{> form }}
+                {{/if}}
                 <!-- Dynamic content, show loading sign if needed-->
                 <!--for showing "loading..." when tasks aren't ready. Defined as a helper in App.js/mainContainer/helper/isLoading-->
                 {{#if isLoading}}

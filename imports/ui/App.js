@@ -14,6 +14,7 @@ const isUserLogged = () => !!getUser();
 const HIDE_COMPLETED_STRING = "hideCompleted";
 const SORTING_STRATEGY_STRING = "sortingStrategy";
 const IS_LOADING_STRING = "isLoading";
+const WANTS_ENTERING = "wantsEntering";
 
 // this returns Mongo query strings to be used by mainContainer/tasks for list display
 const getTasksFilter = () => {
@@ -35,6 +36,9 @@ const getTasksFilter = () => {
 Template.mainContainer.onCreated(function mainContainerOnCreated() {
     // mainContainer is definitely reactive trigger
     this.state = new ReactiveDict();
+
+    this.state.set(WANTS_ENTERING, false);
+    this.state.set(SORTING_STRATEGY_STRING, { should:-1, can:-1, want:-1 });
 
     // Tracker.autorun run a function now and rerun it later whenever its dependencies change
     const handler = Meteor.subscribe('tasks');
@@ -69,6 +73,10 @@ Template.mainContainer.helpers({
   getEmail() {
     /* console.log(getUser().emails[0].address); */
     return getUser().emails[0].address;
+  },
+
+  entering() {
+    return(Template.instance().state.get(WANTS_ENTERING));
   },
 
   //------------------- Task List Related -------------------
@@ -125,6 +133,11 @@ Template.mainContainer.helpers({
 });
 
 Template.mainContainer.events({
+
+  "click #form-show-button" (event, instance) {
+    const currentWantsEntering = instance.state.get(WANTS_ENTERING);
+    instance.state.set(WANTS_ENTERING, !currentWantsEntering);
+  },
 
   // Upon "Hide Completed" button
   "click #hide-completed-button"(event, instance) {
